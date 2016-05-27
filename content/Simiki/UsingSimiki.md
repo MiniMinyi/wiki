@@ -5,6 +5,17 @@ date: 2016-05-27 20:18
 ---
 #Using Simiki
 
+## Usage
+
+
+- add markdown or directory in 	`content` directory  
+- back to mywiki 
+- `simiki g`
+- `cd output`
+- `git add .`  
+- `git commit -m 'comment'`
+- `git push -u origin gh-pages`
+
 ##Install  
 
 
