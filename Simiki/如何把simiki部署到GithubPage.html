@@ -39,30 +39,27 @@
 <p>把静态网页放在hexo中的theme/theme_name/source文件夹下<br />
     hexo g 之后，放在source下的文件会出现在博客的主目录下  </p>
 <p><strong>缺点</strong>：</p>
-<p>每次用simiki生成页面后，都要复制到hexo里，再执行 hexo g和push，太麻烦</p>
+<p>每次用simiki生成页面后，都要复制到hexo里，再执行 hexo g和push，太麻烦  </p>
 </li>
 <li>
 <ul>
 <li>参考<a href="http://simiki.org/zh-docs/deploy.html">simiki部署</a>  ,按照不绑定域名的方法：</li>
-<li>先在github中新建一个repository，命名为wiki，在wiki的output目录下，git初始化，创建 <code>gh-pages</code>分支：
-<code>bash
-    cd output
+<li>先在github中新建一个repository，命名为wiki，在wiki的output目录下，git初始化，创建 <code>gh-pages</code>分支：</li>
+</ul>
+<p><code>cd output
     git init
     git checkout -b gh-pages
     git add .
     git commit -m 'comment'
     git remote add origin git@github.com: &lt;username&gt;/wiki.git
-    git push -u origin gh-pages</code></li>
-<li>
-<p>回到上层目录，创建<code>.gitignore</code>文件：
-<code>bash
-    cd ../
+    git push -u origin gh-pages</code>
+- 回到上层目录，创建<code>.gitignore</code>文件：</p>
+<p><code>cd ../
     echo '*.pyc\noutput' &gt; .gitignore</code></p>
-</li>
-<li>
-<p>创建master分支:
-<code>bash
-    git init
+<ul>
+<li>创建master分支:</li>
+</ul>
+<p><code>git init
     # 将要绑定的域名+/wiki写到站点根目录下的CNAME文件中
     echo "&lt;yourdomain.com&gt;/wiki" &gt; CNAME
     git add .
@@ -70,7 +67,7 @@
     # 以下步骤会在Github上创建一个空项目后提示
     git remote add origin git@github.com:&lt;username&gt;/&lt;projectname&gt;.git
     git push -u origin master</code></p>
-</li>
+<ul>
 <li>
 <p>修改simiki中的_config.yml文件
     设置_config.yml中的root配置项:
@@ -94,7 +91,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-05-28 15:44:50</p>
+                <p>Last Update 2016-05-28 15:48:05</p>
         </div>
     </body>
 </html>
