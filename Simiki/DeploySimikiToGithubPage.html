@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+        <title>Deploy simiki - my wiki</title>
+        <meta name="keywords" content="wiki"/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/wiki/">Home</a> » <a href="/wiki/#Simiki">Simiki</a> » Deploy simiki
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#simikiwikigithub-page">将simiki生成的wiki部署到github page</a><ul>
+<li><a href="#_1">目标</a></li>
+<li><a href="#_2">问题</a></li>
+<li><a href="#_3">方法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="simikiwikigithub-page">将simiki生成的wiki部署到github page</h1>
+<h3 id="_1">目标</h3>
+<p>把simiki生成的wiki页面部署到miniminyi.com/wiki上  </p>
+<h3 id="_2">问题</h3>
+<p>miniminyi.com上的网页是用hexo生成的，hexo的拓展性不是特别好，不能直接把simiki生成的wiki文件夹直接放到miniminyi.github.io的文件夹下</p>
+<h3 id="_3">方法</h3>
+<ul>
+<li>
+<p>把静态网页放在hexo中的theme/theme_name/source文件夹下<br />
+hexo g 之后，放在source下的文件会出现在博客的主目录下  </p>
+<p><strong>缺点</strong>：
+ 每次用simiki生成页面后，都要复制到hexo里，再执行 hexo g和push，太麻烦  </p>
+</li>
+<li>
+<p>参考<a href="http://simiki.org/zh-docs/deploy.html">simiki部署</a>  ,按照不绑定域名的方法：</p>
+<ol>
+<li>
+<p>先在github中新建一个repository，命名为wiki，在wiki的output目录下，git初始化，创建 <code>gh-pages</code>分支：</p>
+<div class="hlcode"><pre><span class="nx">cd</span> <span class="nb">output</span>  
+<span class="nx">git</span> <span class="nb">init</span>  
+<span class="nx">git</span> <span class="nx">checkout</span> <span class="na">-b</span> <span class="nx">gh</span><span class="na">-pages</span>  
+<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>  
+<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;comment&#39;</span>  
+<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span> <span class="o">&lt;</span><span class="nx">username</span><span class="o">&gt;/</span><span class="nx">wiki.git</span>  
+<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">gh</span><span class="na">-pages</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>回到上层目录，创建<code>.gitignore</code>文件：</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="p">..</span><span class="o">/</span>  
+<span class="n">echo</span> <span class="err">&#39;</span><span class="o">*</span><span class="p">.</span><span class="n">pyc</span><span class="err">\</span><span class="n">noutput</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">gitignore</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>创建master分支:</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nb">init</span>
+<span class="err">#</span> <span class="err">将要绑定的域名</span><span class="o">+/</span><span class="nx">wiki</span><span class="err">写到站点根目录下的</span><span class="nx">CNAME</span><span class="err">文件中</span>
+<span class="nx">echo</span> <span class="s2">&quot;&lt;yourdomain.com&gt;/wiki&quot;</span> <span class="o">&gt;</span> <span class="nx">CNAME</span>
+<span class="nx">git</span> <span class="nb">add</span> <span class="nx">.</span>
+<span class="nx">git</span> <span class="nx">commit</span> <span class="na">-m</span> <span class="s1">&#39;your comment&#39;</span>
+<span class="err">#</span> <span class="err">以下步骤会在</span><span class="nx">Github</span><span class="err">上创建一个空项目后提示</span>
+<span class="nx">git</span> <span class="nx">remote</span> <span class="nb">add</span> <span class="nx">origin</span> <span class="nx">git</span><span class="p">@</span><span class="nx">github.com</span><span class="p">:</span><span class="o">&lt;</span><span class="nx">username</span><span class="o">&gt;/&lt;</span><span class="nx">projectname</span><span class="o">&gt;</span><span class="bp">.</span><span class="nx">git</span>
+<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="nx">master</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>修改simiki中的_config.yml文件  </p>
+<div class="hlcode"><pre><span class="err">设置</span><span class="nx">_config.yml</span><span class="err">中的</span><span class="nb">root</span><span class="err">配置项</span><span class="p">:</span>
+<span class="sb">`root: /&lt;projectname&gt;`</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>按照这个方法做完之后,每次把md文件加入content文件夹后，只需要返回上层文件夹，<code>simiki g</code>和<code>simiki p</code>，然后进入output文件夹，<code>git add .</code>和<code>git commit -m "comment"</code>和<code>git push -u origin gh-pages</code>  </p>
+</li>
+<li>
+<p>如果除了修改md文件，还修改了主题或config之类，则需要回到mywiki文件夹，<code>git push -u origin master</code></p>
+</li>
+</ol>
+</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 MiniMinyi.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-05-28 16:21:03</p>
+        </div>
+    </body>
+</html>
