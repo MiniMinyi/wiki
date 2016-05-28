@@ -9,4 +9,4 @@ author: MiniMinyi
 deploy: git
 remote: https://github.com/MiniMinyi/miniminyi.github.io
 root: /wiki
-theme: yasimple
+theme: simple
