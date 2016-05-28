@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+        <title>如何把simiki部署到GithubPage - my wiki</title>
+        <meta name="keywords" content="wiki"/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/wiki/">Home</a> » <a href="/wiki/#Simiki">Simiki</a> » 如何把simiki部署到GithubPage
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <ul>
+<li>
+<p>目标：</p>
+<p>把simiki生成的wiki页面部署到miniminyi.com/wiki上  </p>
+</li>
+<li>
+<p>问题：</p>
+<p>miniminyi.com上的网页是用hexo生成的，hexo的拓展性不是特别好，不能直接把simiki生成的wiki文件夹直接放到miniminyi.github.io的文件夹下</p>
+</li>
+<li>
+<p>方法：</p>
+<ol>
+<li>
+<p>把静态网页放在hexo中的theme/theme_name/source文件夹下<br />
+    hexo g 之后，放在source下的文件会出现在博客的主目录下  </p>
+<p><strong>缺点</strong>：</p>
+<p>每次用simiki生成页面后，都要复制到hexo里，再执行 hexo g和push，太麻烦</p>
+</li>
+<li>
+<ul>
+<li>参考<a href="http://simiki.org/zh-docs/deploy.html">simiki部署</a>  ,按照不绑定域名的方法：</li>
+<li>先在github中新建一个repository，命名为wiki，在wiki的output目录下，git初始化，创建 <code>gh-pages</code>分支：
+<code>bash
+    cd output
+    git init
+    git checkout -b gh-pages
+    git add .
+    git commit -m 'comment'
+    git remote add origin git@github.com: &lt;username&gt;/wiki.git
+    git push -u origin gh-pages</code></li>
+<li>
+<p>回到上层目录，创建<code>.gitignore</code>文件：
+<code>bash
+    cd ../
+    echo '*.pyc\noutput' &gt; .gitignore</code></p>
+</li>
+<li>
+<p>创建master分支:
+<code>bash
+    git init
+    # 将要绑定的域名+/wiki写到站点根目录下的CNAME文件中
+    echo "&lt;yourdomain.com&gt;/wiki" &gt; CNAME
+    git add .
+    git commit -m 'your comment'
+    # 以下步骤会在Github上创建一个空项目后提示
+    git remote add origin git@github.com:&lt;username&gt;/&lt;projectname&gt;.git
+    git push -u origin master</code></p>
+</li>
+<li>
+<p>修改simiki中的_config.yml文件
+    设置_config.yml中的root配置项:
+    <code>root: /&lt;projectname&gt;</code></p>
+</li>
+<li>
+<p>按照这个方法做完之后，每次把md文件加入content文件夹后，只需要返回上层文件夹，<code>simiki g</code>和<code>simiki p</code>，然后进入output文件夹，<code>git add .</code>和<code>git commit -m "comment"</code>和<code>git push -u origin gh-pages</code></p>
+</li>
+<li>如果除了修改md文件，还修改了主题或config之类，则需要回到mywiki文件夹，<code>git push -u origin master</code></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 MiniMinyi.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-05-28 15:44:50</p>
+        </div>
+    </body>
+</html>
