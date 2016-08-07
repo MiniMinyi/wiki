@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+        <title>Linux command - my wiki</title>
+        <meta name="keywords" content="wiki"/>
+        <meta name="description" content=""/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/wiki/">Home</a> » <a href="/wiki/#linux">linux</a> » Linux command
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#psprocess-status">ps(Process Status)</a></li>
+<li><a href="#kill">kill命令</a></li>
+<li><a href="#grepglobal-regular-expression-print">grep(Global Regular Expression Print)</a></li>
+<li><a href="#cat">cat 命令</a></li>
+<li><a href="#wcword-count">wc(word count)命令</a></li>
+<li><a href="#less">less命令</a></li>
+</ul>
+</div>
+<h2 id="psprocess-status">ps(Process Status)</h2>
+<ol>
+<li>命令用途： 用于列出系统中当前运行的那些进程。</li>
+<li>linux上进程的5中状态：
+        - 运行：正在运行或在运行队列中等待
+        - 中断：休眠中，受阻，在等待某个条件的形成或接受到信号
+        - 不可中断：收到信号不唤醒和不可运行，进程必须等到知道有中断发生
+        - 僵死：进程已终止，但进程描述符存在，知道父进程调用wait4()系统调用后释放
+        - 停止：进程收到SIGSTOP,SIGSTP,SIGTIN,SIGTOU信号后停止运行
+    ps工具标识进程的5种状态码
+        - D 不可中断
+        - R 运行
+        - S 中断 sleeping
+        - T 停止 traced or stopped
+        - Z 僵死 a defunct ("zombie")process</li>
+<li>命令格式 ps[参数]</li>
+<li>命令参数
+    a 显示所有进程
+    -a 显示同一终端下所有程序
+    -A 显示所有进程
+    c 显示进程的真实名称
+    -N 反向选择
+    -e 等于"-A"
+    e 显示环境变量
+    f 显示程序间的关系
+    -H 显示树状结构
+    r 显示当前终端的进程
+    T 显示当前终端的所有程序
+    u 指定用户的所有进程
+    -au 显示较详细的资讯
+    -aux 显示所有包含其他使用者的行程
+    -C&lt;命令&gt; 列出指定命令的状况
+    --lines&lt;行数&gt; 每页显示的行数
+更多实例参考(ps命令)[http://www.cnblogs.com/peida/archive/2012/12/19/2824418.html]</li>
+</ol>
+<h2 id="kill">kill命令</h2>
+<ol>
+<li>命令用途：终止指定的进程。通常终止一个前台进程可以使用Ctrl+C键，而终止一个后台的进程就须用kill命令。可以先使用ps/pidof/pstree/top等工具获取进程的PID。kill命令是通过向进程发送指定的信号来结束相应进程的。在默认情况下，采用编号为15的TERM信号，TERM信号将终止所有不能捕获该信号的进程。对于那些可以捕获该信号的进程就要从编号为9的kill信号，强行杀掉该进程。</li>
+<li>命令格式： kill[参数][进程号]</li>
+<li>命令参数：<ul>
+<li>-l 信号，如果不加信号的编号参数，则使用"-l"会列出全部信号的名称</li>
+<li>-a 当处理当前进程时，不限制命令名和进程号的对应关系</li>
+<li>-p 指定kill命令只打印相关进程的进程号，而不发送任何信号</li>
+<li>-s 指定发送信号</li>
+<li>-u 指定用户</li>
+<li></li>
+</ul>
+</li>
+</ol>
+<h2 id="grepglobal-regular-expression-print">grep(Global Regular Expression Print)</h2>
+<ol>
+<li>命令格式 grep [option] pattern file</li>
+<li>命令参数 <ul>
+<li>-a --text #不要忽略二进制的数据</li>
+<li>-A&lt;显示行数&gt; == --after-context=&lt;显示行数&gt; #除了显示符合pattern的那一行，显示该行的后若干行的内容。</li>
+<li>-b == --byte-offset #在显示符合样式的那一行之前，标示出该行第一个字符的编号。</li>
+<li>-B&lt;显示行数&gt; == --before-context=&lt;显示行数&gt; #显示符合样式的行的之前若干行</li>
+<li>-c == --count #计算符合样式的列数</li>
+<li>-C == --context=&lt;显示行数&gt; #显示符合样式的行前后若干行</li>
+<li>-d&lt;动作&gt; == --directories=&lt;动作&gt; #当指定要查找的是目录而非文件时，必须使用该参数</li>
+<li>-e&lt;范本样式&gt; == --regexp=&lt;范本样式&gt; #指定字符串作为查找文件内容的样式</li>
+<li>-f&lt;规则文件&gt; == --file=&lt;规则文件&gt; #指定规则文件，内容含有一个或多个规则样式</li>
+<li>-i == --ignore-case #忽略字符的大小写</li>
+<li>-n == --line-number #在显示符合样式的那一行之前，标示出该行的列数编号</li>
+<li>-r == --recursive #此参数的效果和指定"-d recurse"参数的效果相同。</li>
+<li>-v == --revert-match #显示不包含匹配文本的行</li>
+<li>-x == --line-regexp #只显示全列符合的列</li>
+</ul>
+</li>
+<li>规则表达式
+    ^ 指定行的开头
+    $ 指定行的结束
+    . 匹配一个非换行符
+    * 匹配零个或多个先前字符
+    更多规则可以参考 <a href="http://www.cnblogs.com/peida/archive/2012/12/17/2821195.html">grep命令</a></li>
+</ol>
+<h2 id="cat">cat 命令</h2>
+<ol>
+<li>用途： 连接文件或标准输入并打印。这个命令常用来显示文件的内容，或者将几个文件连接起来显示，或者从标注输入中读取内容并显示，常与重定向符号配合使用。</li>
+<li>命令格式： cat [选项] [文件]</li>
+<li>命令功能：<ol>
+<li>一次显示整个文件： cat filename</li>
+<li>从键盘创建一个文件： cat &gt; filename</li>
+<li>将几个文件合并成一个文件： cat file1 file2 &gt; file</li>
+</ol>
+</li>
+<li>命令参数<ul>
+<li>-A, --show-all </li>
+<li>-b, --number-nonblank 对非空行编号</li>
+<li>-e, -vE</li>
+<li>-E, --show-ends 在每行结束处显示$</li>
+<li>-n, --number 对输出的所有行编号</li>
+<li>-s, --squeeze-blank 有连续两行以上的空白行，就代换为一行的空白行
+<a href="http://www.cnblogs.com/peida/archive/2012/10/30/2746968.html">cat</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="wcword-count">wc(word count)命令</h2>
+<ol>
+<li>命令格式： wc [argument] file</li>
+<li>统计指定文件中的字节数、字数、行数，并将统计结果显示输出。</li>
+<li>命令参数：<ul>
+<li>-c 统计字节数</li>
+<li>-l 统计行数</li>
+<li>-m 统计字符数，不能与-c标志一起使用</li>
+<li>-w 统计字数</li>
+<li>-L 打印最长行的长度</li>
+<li>-help 帮助 --version 显示版本信息</li>
+</ul>
+</li>
+</ol>
+<h2 id="less">less命令</h2>
+<ol>
+<li>命令格式： less[参数] 文件</li>
+<li>命令参数：<ul>
+<li>-b &lt;缓冲区大小&gt; 设置缓冲区的大小</li>
+<li>-e  当文件显示结束后，自动离开</li>
+<li>-f  强迫打开特殊文件，例如外围设备代号、目录和二进制文件</li>
+<li>-g  只标志最后搜索的关键词</li>
+<li>-i  忽略搜索时的大小写</li>
+<li>-m  显示类似more命令的百分比</li>
+<li>-N  显示每行的行号</li>
+<li>-o &lt;文件名&gt; 将less 输出的内容在指定文件中保存起来</li>
+<li>-Q  不使用警告音</li>
+<li>-s  显示连续空行为一行</li>
+<li>-S  行过长时间将超出部分舍弃</li>
+<li>-x &lt;数字&gt; 将“tab”键显示为规定的数字空格</li>
+<li>/字符串：向下搜索“字符串”的功能</li>
+<li>?字符串：向上搜索“字符串”的功能</li>
+<li>n：重复前一个搜索（与 / 或 ? 有关）</li>
+<li>N：反向重复前一个搜索（与 / 或 ? 有关）</li>
+<li>b  向后翻一页</li>
+<li>d  向后翻半页</li>
+<li>h  显示帮助界面</li>
+<li>Q  退出less 命令</li>
+<li>u  向前滚动半页</li>
+<li>y  向前滚动一行</li>
+<li>空格键 滚动一行</li>
+<li>回车键 滚动一页</li>
+<li>[pagedown]： 向下翻动一页</li>
+<li>[pageup]：   向上翻动一页</li>
+</ul>
+</li>
+</ol>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 MiniMinyi.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-08-07 11:08:33</p>
+        </div>
+    </body>
+</html>
